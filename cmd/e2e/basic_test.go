@@ -72,7 +72,7 @@ func verifyEDS(t *testing.T, edsName string, edsSpec zv1.ElasticsearchDataSetSpe
 	eds, err := waitForEDS(t, edsName)
 	require.NoError(t, err)
 	err = waitForEDSCondition(t, eds.Name, func(eds *zv1.ElasticsearchDataSet) error {
-		if !assert.ObjectsAreEqualValues(replicas, eds.Spec.Replicas) {
+		if !assert.EqualValues(t, replicas, eds.Spec.Replicas) {
 			return fmt.Errorf("%s: replicas %d != expected %d", eds.Name, *eds.Spec.Replicas, *replicas)
 		}
 		if !assert.ObjectsAreEqualValues(edsSpec.Template.Labels, eds.Spec.Template.Labels) {
